@@ -1,10 +1,6 @@
-
 #include "shader.h"
 #include <fstream>
-#include <iostream>
 #include <sstream>
-#include <string>
-#include <glad/glad.h>
 
 Shader::Shader(std::string path, int type)
 {

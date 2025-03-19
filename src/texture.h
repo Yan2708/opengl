@@ -1,3 +1,6 @@
+#ifndef TEXTURE_H
+#define TEXTURE_H
+#include "common.h"
 class texture
 {
 private:
@@ -10,6 +13,7 @@ public:
 
   unsigned int id;
 
-  void load(const char* path);
+  void load(const char* path, int format);
   void bind(int activeTexture);
 };
+#endif

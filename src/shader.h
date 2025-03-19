@@ -1,5 +1,6 @@
-#include <string>
-
+#ifndef SHADER_H
+#define SHADER_H
+#include "common.h"
 class Shader
 {
 public:
@@ -10,3 +11,4 @@ private:
     static std::string readFile(std::string path);
 };
 
+#endif

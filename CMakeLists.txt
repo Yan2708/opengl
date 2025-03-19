@@ -28,7 +28,7 @@ add_executable(GLFWProject
     src/VAP.cpp
     src/EBO.cpp
     src/texture.cpp
-    src/stb_image.cpp
+    src/common.h
 )
 
 # Link GLFW

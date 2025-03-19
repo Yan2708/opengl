@@ -1,7 +1,8 @@
-#include <glad/glad.h>
-#include <iostream>
-#include <vector>
-#include <cmath>
+#include "common.h"
+
+#define STB_IMAGE_IMPLEMENTATION
+#include "stb_image.h"
+
 #include "window.h"
 #include "shader_program.h"
 #include "VBO.h"
@@ -9,14 +10,13 @@
 #include "VAP.h"
 #include "EBO.h"
 #include "texture.h"
-#include "stb_image.h"
 
 float vertices[] = {
     // positions          // colors           // texture coords
-     0.5,  0.5, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // top right
-     0.5, -0.5, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // bottom right
+     0.5,  0.5, 0.0f,   1.0f, 0.0f, 0.0f,   2.0f, 2.0f,   // top right
+     0.5, -0.5, 0.0f,   0.0f, 1.0f, 0.0f,   2.0f, 0.0f,   // bottom right
     -0.5, -0.5, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // bottom left
-    -0.5,  0.5, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f    // top left 
+    -0.5,  0.5, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 2.0f    // top left 
 };
 
 unsigned int indices[] = {  
@@ -54,11 +54,22 @@ int main() {
     ebo.bind();
     ebo.buffer(indices, sizeof(indices));
 
-    texture* tex = new texture(GL_MIRRORED_REPEAT, GL_LINEAR, GL_LINEAR_MIPMAP_NEAREST);
-    tex->load("./assets/textures/wall.jpg");
+    texture* tex = new texture(GL_REPEAT, GL_LINEAR, GL_LINEAR_MIPMAP_NEAREST);
+    tex->load("./assets/textures/wall.jpg", GL_RGB);
 
-    texture* tex2 = new texture(GL_MIRRORED_REPEAT, GL_LINEAR, GL_LINEAR_MIPMAP_NEAREST);
-    tex2->load("./assets/textures/texture.jpg");
+    texture* tex2 = new texture(GL_REPEAT, GL_NEAREST, GL_NEAREST);
+    tex2->load("./assets/textures/awesomeface.jpg", GL_RGBA);
+
+    program->use();
+    program->setUniformi("texture1", {0});
+    program->setUniformi("texture2", {1});
+
+    glm::vec4 vec = glm::vec4(1.0f, 0.0f, 0.0f, 1.0f);
+    glm::mat4 trans = glm::mat4(1.0f);
+    trans = glm::rotate(trans, glm::radians(90.0f), glm::vec3(0.0, 0.0, 1.0));
+    trans = glm::scale(trans, glm::vec3(0.5, 0.5, 0.5));  
+    vec = trans * vec;
+    std::cout << vec.x << vec.y << vec.z << std::endl;
 
     while(!glfwWindowShouldClose(win->window))
     {
@@ -69,11 +80,20 @@ int main() {
         glClear(GL_COLOR_BUFFER_BIT);
         // render
         program->use();
+        float time = glfwGetTime();
+        glm::mat4 trans = glm::mat4(1.0f);
+        trans = glm::rotate(trans, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, 1.0f));
+        trans = glm::translate(trans, glm::vec3(0.5f, -0.5f, 0.0f));
+        program->setUniformMatrix4f("transform", trans);
+        program->setUniformf("mixv",{(float)sin(time)});
         tex->bind(GL_TEXTURE0);
-        program->setUniformi("texture1", {0});
         tex2->bind(GL_TEXTURE1);
-        program->setUniformi("texture2", {1});
         vao.bind();
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+        trans = glm::mat4(1.0f);
+        trans = glm::translate(trans, glm::vec3(-0.50f, 0.50f, 0.0f));
+        trans = glm::scale(trans, glm::vec3(sin(time)));
+        program->setUniformMatrix4f("transform", trans);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
         // swap buffers & poll events
         win->check();

@@ -1,3 +1,7 @@
+#ifndef VAP_H
+#define VAP_H
+
+#include "common.h"
 class VAP
 {
 private:
@@ -15,3 +19,4 @@ public:
     void disable();
 };
 
+#endif

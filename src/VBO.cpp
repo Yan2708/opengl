@@ -1,6 +1,4 @@
 #include "VBO.h"
-#include <glad/glad.h>
-#include <iostream>
 
 VBO::VBO()
 {

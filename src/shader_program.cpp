@@ -1,7 +1,5 @@
 #include <glad/glad.h>
 #include "shader_program.h"
-#include <iostream>
-
 
 ShaderProgram::ShaderProgram(std::vector<Shader*> shaders)
 {
@@ -47,6 +45,13 @@ void ShaderProgram::setUniformf(const char* name, std::vector<float> values)
         return;
     }
 }
+
+void ShaderProgram::setUniformMatrix4f(const char *name, glm::mat4 mat)
+{
+    unsigned int transformLoc = glGetUniformLocation(id, name);
+    glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(mat));
+}
+
 
 void ShaderProgram::setUniformi(const char *name, std::vector<int> values)
 {

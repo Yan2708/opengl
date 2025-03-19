@@ -1,11 +1,10 @@
-#pragma once
-#include <glad/glad.h> 
-#include <GLFW/glfw3.h>
-#include <iostream>
+#ifndef WINDOW_H
+#define WINDOW_H
+
+#include "common.h"
 
 class Window
 {
-
 public:
     Window(int width, int height, std::string title);
     ~Window();
@@ -21,3 +20,4 @@ private:
     void static framebuffer_size_callback(GLFWwindow* window, int width, int height);
 };
 
+#endif

@@ -1,3 +1,7 @@
+#ifndef VAO_H
+#define VAO_H
+#include "common.h"
+
 class VAO
 {
 private:
@@ -11,3 +15,4 @@ public:
     void bind();
     void unbind();
 };
+#endif

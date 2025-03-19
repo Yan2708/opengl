@@ -1,5 +1,4 @@
 #include "VAP.h"
-#include <glad/glad.h>
 
 VAP::VAP(int position, int vertexAttributeSize, int type, int normalized, long stride, void* offset):
 position(position), vertexAttributeSize(vertexAttributeSize), type(type), normalized(normalized),

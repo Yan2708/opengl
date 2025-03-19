@@ -1,3 +1,8 @@
+#ifndef VBO_H
+#define VBO_H
+
+#include "common.h"
+
 class VBO
 {
 private:
@@ -11,3 +16,4 @@ public:
     void buffer(float* vertices, int size);
     void unbind();
 };
+#endif

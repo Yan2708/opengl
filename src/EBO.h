@@ -1,3 +1,7 @@
+
+#ifndef EBO_H
+#define EBO_H
+#include "common.h"
 class EBO
 {
 private:
@@ -10,5 +14,7 @@ public:
     void bind();
     void buffer(unsigned int* vertices, int size);
 };
+
+#endif 
 
 
