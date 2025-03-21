@@ -29,6 +29,8 @@ add_executable(GLFWProject
     src/EBO.cpp
     src/texture.cpp
     src/common.h
+    src/camera.cpp
+    src/InputHandler.cpp
 )
 
 # Link GLFW
